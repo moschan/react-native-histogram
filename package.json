@@ -1,0 +1,28 @@
+{
+  "name": "react-native-histogram",
+  "version": "1.0.0",
+  "description": "The histogram component for React Native",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moschan/react-native-histogram.git"
+  },
+  "keywords": [
+    "react-component",
+    "react-native",
+    "ios",
+    "android",
+    "histogram",
+    "chart",
+    "graph"
+  ],
+  "author": "moschan <kota.frsw＠gmail.com> (http://moschan.com/blog)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/moschan/react-native-histogram/issues"
+  },
+  "homepage": "https://github.com/moschan/react-native-histogram#readme"
+}
