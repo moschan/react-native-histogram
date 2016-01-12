@@ -4,28 +4,61 @@
  */
 'use strict';
 
+import Histogram from './index.js'
+
 var React = require('react-native');
 var {
   AppRegistry,
   StyleSheet,
   Text,
   View,
+  TouchableOpacity,
 } = React;
 
 var HistogramExample = React.createClass({
+  getInitialState: function() {
+    return {
+      data: [{}],
+    }
+  },
+  componentWillMount: function() {
+    this.set_random_param()
+  },
+  set_random_param: function() {
+    var row_datas = [];
+    for (var i=0; i<500; i++) {
+      row_datas[i] = Math.random();
+    }
+    this.setState({
+      data: [
+        { data: row_datas }
+      ]
+    })
+  },
   render: function() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          Histogram Demo
         </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+        <View>
+          <Histogram
+            data={this.state.data}
+            height={300}
+            width={300}
+            horizontal={false}
+          />
+        </View>
+        <View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {this.set_random_param()}}
+            >
+            <Text
+              style={styles.buttonText}
+              >Update</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -47,6 +80,21 @@ var styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+  },
+  button: {
+    flex:1,
+    height: 30,
+    marginTop: 30,
+    paddingTop: 6,
+    paddingBottom: 6,
+    borderRadius: 3,
+    borderWidth: 1,
+    backgroundColor: '#007AFF',
+    borderColor: 'transparent',
+  },
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
   },
 });
 
