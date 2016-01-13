@@ -55,13 +55,15 @@ export default class Bar extends React.Component {
           Style.bar,
           this.state.onFocusBar && Style.onFocusBar,
           {
-            height: this.props.value,
+            height: this.props.value*2,
             transform: [
               {scaleY: this.state.barScale},
             ],
           }
         ]}
-        ></Animated.View>
+        >
+        <Text style={Style.labelText}>{this.props.value}</Text>
+        </Animated.View>
     </TouchableWithoutFeedback>
     )
   }
