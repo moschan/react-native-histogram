@@ -12,28 +12,36 @@ var Style = StyleSheet.create({
     height: 100,
   },
   bar: {
-    backgroundColor: 'rgb(0, 122, 255)',
     width: 15,
   },
   bars: {
     flexDirection: 'row',
     alignItems: 'flex-end',
   },
-  onFocusBar: {
-    borderWidth: 1,
-    borderColor: '#62aeff',
-    backgroundColor: '#62aeff',
-  },
   labelText: {
+    fontSize: 5,
+    // width: 15,
+  },
+  labelTextHorizontal: {
     fontSize: 5,
     width: 15,
   },
-  labelVertical: {
-    // position: 'absolute',
-  },
   graphScale: {
     flexDirection: 'row',
+  },
+  scaleVertical: {
+    flex:1,
+    flexDirection: 'row',
+  },
+  scaleLine: {
+    height: .2,
+    position: 'absolute',
+    top: 2.5,
+    left: 5,
+    width: 300,
+    backgroundColor: 'rgba(0,0,0,.2)',
   }
+
 });
 
 module.exports = Style
