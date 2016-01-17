@@ -10,7 +10,7 @@ react-native-histogram
 
 Demo
 ---
-![](./doc/beta1.gif)
+![](./doc/beta2.gif)
 
 
 Installation
@@ -40,7 +40,7 @@ var HistogramExample = React.createClass({
   componentWillMount: function() {
     var row_datas = [];
     for (var i=0; i<500; i++) {
-      row_datas[i] = Math.random();
+      row_datas[i] = Math.random() * 100;
     }
     this.setState({
       data: [{ data: row_datas }]
@@ -50,7 +50,12 @@ var HistogramExample = React.createClass({
     return (
       <View style={styles.container}>
         <View>
-          <Histogram data={this.state.data} />
+          <Histogram
+            data={this.state.data}
+            height={200}
+            width={300}
+            split={20}
+          />
         </View>
       </View>
     );
@@ -76,7 +81,7 @@ The value of histogram like a `[{data: [10, 13, 8, 19, 17]}]`
 TODO
 ===
 - [x] show simple histogram
-- [ ] show values
+- [x] show values
 - [ ] show balloon
 - [ ] show multiple historgams
 - [ ] show unit
