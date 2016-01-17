@@ -4,7 +4,8 @@
  */
 'use strict';
 
-import Histogram from './index.js'
+// import Histogram from './index.js'
+import Histogram from '.react-native-histogram'
 
 var React = require('react-native');
 var {
