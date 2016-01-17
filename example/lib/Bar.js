@@ -45,16 +45,19 @@ export default class Bar extends React.Component {
         >
         <Animated.View style={[
           Style.bar,
-          {backgroundColor: this.state.color.interpolate({
+          {
+            backgroundColor: this.state.color.interpolate({
             inputRange: [0, 1],
             outputRange: ['rgb(0, 122, 255)', '#62aeff']
-          })},
+            }),
+            width: this.props.width,
+          },
           {
             height: this.props.value,
           }
         ]}
         >
-        <Text style={Style.labelText}>{this.props.value}</Text>
+        <Text style={Style.barText}>{parseInt(this.props.value/this.props.magnification)}</Text>
         </Animated.View>
     </TouchableWithoutFeedback>
     )

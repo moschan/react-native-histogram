@@ -11,17 +11,20 @@ var {
   View,
 } = React;
 
+var bar_width = 15
+var graph_width = 15
+
 export default class Histogram extends React.Component {
   constructor() {
     super()
     this.state = {
-      data: [],
       render_data: [],
       verticalScales: [],
       horizontalScales: [],
-      height: 300,
+      height: 100,
       width: 300,
       horizontal: false,
+      magnification: 1,
     }
   }
   componentDidMount() {
@@ -31,81 +34,96 @@ export default class Histogram extends React.Component {
     this._initGraph(NextProps)
   }
   _initGraph(props) {
-    this.setState({
-      horizontalScales: this._getHorizontalScales(props.data),
-    })
+    graph_width = props.width
+    bar_width = parseInt(props.width/props.split)
 
+    var datas = clone(props.data);
 
-    var data = clone(props.data);
-    var sorted_data = data.sort((a,b) => a-b)
-    var categorized_data = this._dataCategorizer(sorted_data)
-
-    var formated_data = this._dataFormatter(props.data)
-    console.log(formated_data)
-    var formated_sorted_data = formated_data.sort((a,b) => a-b)
-    // console.log(formated_sorted_data)
-    var render_data = this._dataCategorizer(formated_sorted_data)
-
-    this.setState({
-      data: categorized_data,
-      render_data: render_data,
-      verticalScales: this._getVericalScales(categorized_data),
-    })
-  }
-  _dataFormatter(datas) {
-    return datas.map((val)=>{
-      var formated_data = val
-      var max = Math.max(...val.data)
-      var magnification = 100 / max
-      // var digit = max.toString(10).length
-      // console.log(this.props.data)
-      formated_data.data = formated_data.data.map((val)=>{
-        return parseInt(val * magnification)
-      })
+    var render_data =  datas.map((val)=>{
+      var formated_sorted_data = this._dataSorter(val)
+      var categorized_data = this._dataCategorizer(formated_sorted_data)
+      var formated_data = this._dataFormatter(categorized_data)
       return formated_data
     })
 
-  }
-  _dataCategorizer(datas) {
-    return datas.map((val)=>{
-      var categorized_data = []
-      var _data = []
-      var max = Math.max(...val.data)
-      var min = Math.min(...val.data)
-      var interval = (max - min) / 20
-      var threshold = min + interval;
-      for (var i=0; i<val.data.length; i++) {
-        if (val.data[i] < threshold) {
-          categorized_data[categorized_data.length-1] += 1
-        } else {
-          threshold += interval;
-          categorized_data.push(0)
-        }
-      }
-      val.data = categorized_data
-      return val
+    this.setState({
+      render_data: render_data,
+      verticalScales: this._getVerticalScales(render_data),
+      horizontalScales: this._getHorizontalScales(props.data),
     })
   }
-  _getVericalScales(datas) {
-    var memories = []
-    var max = Math.max(...datas.map((data) => {return Math.max(...data.data)}))
-    var interval = max / 5
-    var threshold = max;
-    for (var i=5; i>-1; i--) {
-      memories.push(parseInt(threshold))
-      threshold -= interval
+  _dataSorter(datas) {
+    var sorted_data = datas
+    sorted_data.data = Array.prototype.sort.call(datas.data, (a,b) => a-b)
+    return datas
+  }
+  _dataFormatter(datas) {
+    var formated_data = datas
+    var max = Math.max(...datas.data)
+    var magnification = (this.props.height-10-3) / max
+    formated_data.magnification = magnification
+    // var digit = max.toString(10).length
+    formated_data.data = formated_data.data.map((datas)=>{
+      return parseInt(datas * magnification)
+    })
+    return formated_data
+  }
+  _dataCategorizer(datas) {
+    var default_data = datas
+    var categorized_data = [0]
+    var _data = []
+    var max = Math.max(...datas.data)
+    var min = Math.min(...datas.data)
+    var interdatas = (max - min) / this.props.split
+    var threshold = min + interdatas;
+    for (var i=0; i<datas.data.length; i++) {
+      if (datas.data[i] < threshold) {
+        categorized_data[categorized_data.length-1] += 1
+      } else if (i+1 != datas.data.length) {
+        threshold += interdatas;
+        categorized_data.push(0)
+      }
     }
-    return memories
+    default_data.data = categorized_data
+    return default_data
+  }
+
+  _getVerticalScales(datas) {
+    var return_value = []
+    var max = Math.max(
+      ...datas.map((data) => {
+        return Math.max(...data.data.map((val) => {
+          return val / data.magnification
+        }))
+      })
+    )
+    var magnification = (this.props.height-3-10) / max
+    var interval = max / 5
+    var threshold = max
+
+    for(let i of new Array(5)) {
+      return_value.push(
+        {
+          value: Math.floor(threshold),
+          position: threshold * magnification,
+        }
+      )
+      threshold = threshold - interval
+    }
+
+    return_value.push({value: 0, position: 0 })
+
+    return return_value
   }
   _getHorizontalScales(datas) {
     var memories = []
     var max = Math.max(...datas.map((data) => {return Math.max(...data.data)}))
-    // console.log('--------------------')
-    // console.log(datas)
-    var interval = max / 20
+    var interval = max / this.props.split
     var threshold = 0;
-    for (var i=0; i<20; i++) {
-      memories.push(Math.round( threshold * 100 ) / 100)
+    for(let i of new Array(this.props.split+1)) {
+      // TODO can receive decimal parametor
+      // memories.push(Math.round( threshold * this.props.height ) / this.props.height)
+      memories.push(Math.round( threshold ))
       threshold += interval
     }
     return memories
@@ -114,28 +132,34 @@ export default class Histogram extends React.Component {
     return graph.data.map((value, index)=>{
       return (
         <View>
-          <Bar value={value} />
+          <Bar value={value} magnification={graph.magnification} width={bar_width}/>
         </View>
       )
     })
   }
-  _renderVerticalScales(value) {
-    console.log(typeof(value))
+  _renderVerticalScales(scale) {
     return (
       <View style={[
         Style.scaleVertical,
-        {bottom: value + 3},
+        {bottom: scale.position + 3},
       ]}>
         <Text style={[
           Style.labelText,
-        ]}>{value}</Text><View style={Style.scaleLine}></View>
+        ]}>{scale.value}</Text>
+        <View style={[
+          Style.scaleLine,
+          {width: graph_width},
+        ]}></View>
       </View>
     )
   }
   _renderHorizontalScales(value) {
     return (
       <View>
-        <Text style={Style.labelTextHorizontal}>{value}</Text>
+        <Text style={[
+          Style.labelTextHorizontal,
+          {width: bar_width}
+        ]}>{value}</Text>
       </View>
     )
   }
@@ -201,7 +225,7 @@ function clone(obj) {
 
 Histogram.defaultProps = {
   data: [],
-  height: 300,
+  height: 100,
   width: 300,
   horizontal: false,
 }

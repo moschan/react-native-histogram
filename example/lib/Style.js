@@ -14,6 +14,12 @@ var Style = StyleSheet.create({
   bar: {
     width: 15,
   },
+  barText: {
+    fontSize: 7,
+    textAlign: 'center',
+    color: '#fff',
+    padding: 2,
+  },
   bars: {
     flexDirection: 'row',
     alignItems: 'flex-end',
@@ -30,6 +36,7 @@ var Style = StyleSheet.create({
     flexDirection: 'row',
   },
   scaleVertical: {
+    position: 'absolute',
     flex:1,
     flexDirection: 'row',
   },

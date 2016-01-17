@@ -27,7 +27,7 @@ var HistogramExample = React.createClass({
   set_random_param: function() {
     var row_datas = [];
     for (var i=0; i<500; i++) {
-      row_datas[i] = Math.random();
+      row_datas[i] = Math.random() * 100;
     }
     this.setState({
       data: [
@@ -44,8 +44,9 @@ var HistogramExample = React.createClass({
         <View>
           <Histogram
             data={this.state.data}
-            height={300}
+            height={200}
             width={300}
+            split={20}
             horizontal={false}
           />
         </View>
