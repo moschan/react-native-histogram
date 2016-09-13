@@ -16,23 +16,24 @@ Demo
 Installation
 ==
 
-in Cli
----
 ```
 npm i react-native-histogram
 ```
 
-in JavaScirpt
+## Getting Starte
+
+Simple
+---
+```
+<Histogram data={this.state.data} />
+```
+
+
+Advenced
 ---
 ```
 import Histogram from 'react-native-histogram';
-```
 
-
-Usage
-===
-
-```
 var HistogramExample = React.createClass({
   getInitialState: function() {
     return {data: [{}]}
@@ -64,11 +65,6 @@ var HistogramExample = React.createClass({
 
 ```
 
-Simple
----
-```
-<Histogram data={this.state.data} />
-```
 
 Props
 ===
