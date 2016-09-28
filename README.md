@@ -17,7 +17,7 @@ Installation
 ==
 
 ```
-npm i react-native-histogram
+npm i -S react-native-histogram
 ```
 
 ## Getting Starte
