@@ -20,7 +20,7 @@ Installation
 npm i -S react-native-histogram
 ```
 
-## Getting Starte
+## Getting Started
 
 Simple
 ---
@@ -71,7 +71,7 @@ Props
 
 data(Array) `Default: []`
 ---
-The value of histogram like a `[{data: [10, 13, 8, 19, 17]}]`
+The list of value for histogram. Ex. `[{data: [10, 13, 8, 19, 17]}]`
 
 
 TODO
