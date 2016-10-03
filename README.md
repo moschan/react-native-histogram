@@ -69,9 +69,16 @@ var HistogramExample = React.createClass({
 Props
 ===
 
-data(Array) `Default: []`
+data `Default: []`
 ---
 The list of value for histogram. Ex. `[{data: [10, 13, 8, 19, 17]}]`
+
+width `Default: 0`
+---
+
+height `Default: 0`
+---
+
 
 
 TODO
