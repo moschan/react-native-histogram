@@ -75,10 +75,11 @@ The list of value for histogram. Ex. `[{data: [10, 13, 8, 19, 17]}]`
 
 width `Default: 0`
 ---
+The width of graph.
 
 height `Default: 0`
 ---
-
+The height of graph.
 
 
 TODO
