@@ -83,7 +83,7 @@ The height of graph.
 
 sprit `Default: 0`
 ---
-
+Interval of value
 
 
 TODO
