@@ -93,6 +93,7 @@ TODO
 - [ ] show balloon
 - [ ] show multiple historgams
 - [ ] show unit
+- [ ] color option
 
 
 Contributing
