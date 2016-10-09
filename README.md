@@ -94,6 +94,7 @@ TODO
 - [ ] show multiple historgams
 - [ ] show unit
 - [ ] color option
+- [ ] animation option
 
 
 Contributing
