@@ -25,6 +25,7 @@ npm i -S react-native-histogram
 Simple
 ---
 ```
+import Histogram from 'react-native-histogram';
 <Histogram data={this.state.data} />
 ```
 
